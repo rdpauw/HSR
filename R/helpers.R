@@ -66,7 +66,7 @@ midyear <- function(x, year_ref, year_plus_one) {
   ## filter
   x <- x[x$YEAR %in% c(year_ref, year_plus_one),]
   ## pivot_wider
-  x <- pivot_wider(x, names_from = "YEAR", values_from = "POP")
+  x <- tidyr::pivot_wider(x, names_from = "YEAR", values_from = "POP")
   ## calculate mid_pop
   x$midpop <- as.numeric(unlist((x[,year_ref] + x[,year_plus_one])/2))
   ## only keep result
@@ -75,4 +75,84 @@ midyear <- function(x, year_ref, year_plus_one) {
   names(x)[names(x) == "midpop"] <- as.character(year_ref)
   ## return result
   return(x)
+}
+
+#' Calculate population distribution
+#'
+#' @param x A database containing the variables SEX, AGE, AND REGION.
+#' @param year_ref Reference year to use for the calculations.
+#' @param name_pop_var Character variable with name of population variable.
+#' @param by Character variable of combination on which the distribution should be calculated.
+#' @param name_rate_var Name of the variable to transform in age-adjusted estimates
+#' @return Dataframe with population distribution and age-adjusted estimates.
+#' @export
+pop_distribution <- function(x, year_ref, name_pop_var = "POP",
+                             by = c("REGION", "SEX"), name_rate_var = "rate") {
+
+  ## filter
+  x <- x[x$YEAR %in% c(year_ref),] ## filter YEAR
+
+  ## create new variable to save result
+  x$popdens <- 0
+
+  ## over which combinations?
+  x_combn <- unique(x[by])
+
+  for (comn_i in 1:(dim(x_combn)[1])) {
+    ## check if TRUE
+    id <- apply(x[,by], 1, function(x) !(FALSE %in% (x == x_combn[comn_i,])))
+
+    n_tot <- sum(x[id, name_pop_var])
+    x[id, "popdens"] <- (x[id, name_pop_var]) / n_tot
+  }
+
+  ## calculate age-adjusted rate
+  x$age_adjusted_rate <- x[name_rate_var] * x["popdens"]
+  x$age_adjusted_rate <- unlist(x$age_adjusted_rate)
+
+  ## calculate for whole region
+  res <- list() ## create empty list to save result
+
+  for (comn_i in 1:(dim(x_combn)[1])) {
+    ## check if TRUE
+    id <- apply(x[,by], 1, function(x) !(FALSE %in% (x == x_combn[comn_i,])))
+
+    n_age_adj <- sum(x[id, "age_adjusted_rate"])
+    n_pop <- sum(x[id, "POP"])
+    n_rate <- sum(x[id, "rate"])
+    n_dens <- sum(x[id, "popdens"])
+
+    res[[comn_i]] <- dplyr::tibble(x_combn[comn_i,], age_adjusted_rate = n_age_adj,
+                            POP = n_pop, rate = n_rate, popdens = n_dens,
+                            YEAR = year_ref,
+                            INDICATOR = "myocardial infarction incidence")
+  }
+
+  x <- dplyr::bind_rows(x, dplyr::bind_rows(res))
+
+  ## return result
+  return(x)
+}
+
+#' Calculate difference in percentages (%)
+#'
+#' @param x The reference proportion.
+#' @param y The most recent value upon which the difference should be calculated.
+#' @param  dec The number of decinimal numbers to be used.
+#' @param as_text Should the result be transformed as text.
+#' @return difference (in %).
+#' @export
+diff_perc <- function(x, y, dec = 1, as_text = TRUE) {
+  if (FALSE %in% unlist(lapply(list(x, y), is.numeric))) {
+    stop("Input for x and y should be numeric")
+  }
+  ## calculate
+  res <- round(((y-x)/x)*100, dec)
+
+  ## textual?
+  if (as_text) {
+    res <- paste0(res, " %")
+  }
+  ## return result
+  return(res)
 }
