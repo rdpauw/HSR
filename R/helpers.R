@@ -156,3 +156,44 @@ diff_perc <- function(x, y, dec = 1, as_text = TRUE) {
   ## return result
   return(res)
 }
+
+#' Save the DW calculation as an xlsx-workbook
+#'
+#' @param DW result of the DW calculation (tibble)
+#' @param folder folder, where to save the file (not needed if folder structure is integrated in name)
+#' @param name filename to save the file (no .xlsx extension needed)
+#' @param use_date should the date be included in the file (Default: TRUE)
+#' @param template template that should be used when saving the file
+#' @return xlsx-file with on each tab the DW for each disease
+#' @export
+save_dw_xlsx <- function(DW, folder = "", name = "", use_date = TRUE, template){
+
+  ## copy worksheet style
+  xlsx_template <- template
+
+  ## change the order of the output
+  id_c <- c("Age","Sex","DIA","AMI","ANG","CBDA","CBDC","CKD","COPD","LBP","NKP","OST","RHE","ALZ","EPI",
+            "ALD","AMP","OPI","CAN","COC","SCH","MDD","DYS","ANX","BIP","CIR","MIG","TTH","AST","HEA","MAC","CAT",
+            "GLA","NVL","REF") %in% colnames(DW)
+
+  DW <- DW[c("Age","Sex","DIA","AMI","ANG","CBDA","CBDC","CKD","COPD","LBP","NKP","OST","RHE","ALZ","EPI",
+             "ALD","AMP","OPI","CAN","COC","SCH","MDD","DYS","ANX","BIP","CIR","MIG","TTH","AST","HEA","MAC","CAT",
+             "GLA","NVL","REF")[id_c]]
+
+  ## write sheet
+  writeData(xlsx_template, "DW", DW, withFilter = TRUE)
+
+  ## filename
+  if (use_date) {
+    fname <- paste0(folder, name, "-",format(Sys.Date(), "%Y%m%d"), ".xlsx")
+  } else {
+    fname <- paste0(folder, name, ".xlsx")
+  }
+  ## write as xlsx-file
+  saveWorkbook(xlsx_template,
+               file = fname,
+               overwrite = TRUE)
+
+  message(paste0("File succesfully saved as " ,fname))
+
+}
