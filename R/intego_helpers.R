@@ -23,6 +23,9 @@ intego_management <-
     df_intego <- bind_rows(bind_rows(df_intego, df_intego),df_intego)
     df_intego$Region <- Region
 
+    ## divide by 100
+    df_intego <- dplyr::mutate(.data = df_intego, across(.cols = -c("Sex", "Age", "Region"), .fns = ~.x/100))
+
     ## return result
     return(df_intego)
 

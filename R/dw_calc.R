@@ -1,16 +1,16 @@
 #' Perform the standard DW calculations (non-stratified)
 #'
 #' @param xlsx Excel-file with sheets named as in input dis.
-#' @param dis names of the variables that should be extracted to calculate the disease DW (!should be character string).
+#' @param diseases names of the variables that should be extracted to calculate the disease DW (!should be character string).
 #' @return List with resulting DW age- and gender stratified for each of the given diseases.
 #' @export
-dw_calc <- function(xlsx, dis){
+dw_calc <- function(xlsx, diseases){
   ## create an empty list
   dw_dat <- list()
   ## loop over all available disease states
   message("Calculating DW...\n")
   pb = txtProgressBar(title = "Calculating DW",
-                      min = 0, max = length(dis), initial = 0) ## add progress bar
+                      min = 0, max = length(diseases), initial = 0) ## add progress bar
   setTxtProgressBar(pb,0)
   i <- 1
   for (dis in diseases) {
@@ -44,7 +44,7 @@ dw_calc <- function(xlsx, dis){
   sex <-
     c("M", "F")
 
-  message("Calculation finished!")
+  message("\nCalculation finished!")
 
   res_DW <- as_tibble(expand.grid(age,sex))
   res_DW <- merge(res_DW, dw_dat)

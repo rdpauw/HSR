@@ -12,12 +12,16 @@ getYLD <-
     PREV <- openxlsx::read.xlsx(f_prev, x)
     DW   <- openxlsx::read.xlsx(f_dw, "DW")
 
+    ## change colname of dataset
+    colnames(PREV)[which(colnames(PREV) == x)] <- "P"
+
+    ## create empty dataframe
     YLD <- data.frame()
 
     # apply P to each age group
     for (i in seq(nrow(PREV))) {
       a <- getage(PREV[i, "Age"])
-      p <- PREV[rep(i, length(a)), c("Region", "Sex", "Age", x)]
+      p <- PREV[rep(i, length(a)), c("Region", "Sex", "Age", "P")]
       p$Age <- a
       YLD <- rbind(YLD, p)
     }
@@ -26,7 +30,7 @@ getYLD <-
     YLD <- left_join(YLD, POP, by = c("Region", "Sex", "Age"))
 
     ## calculate P*POP
-    YLD$N   <- unlist(YLD[x]) * unlist(YLD$POP)
+    YLD$N   <- unlist(YLD$P) * unlist(YLD$POP)
     DW_tmp <- DW[c("Age", "Sex", x)]
     names(DW_tmp)[3] <- "DW"
 

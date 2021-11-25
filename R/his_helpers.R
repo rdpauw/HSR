@@ -53,17 +53,12 @@ his_management <-
           labels = c("0-14", "15-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75+"))
 
     ### recode each disease
-    pb = txtProgressBar(title = "Reformatting all diseases",
-                        min = 0, max = length(dis), initial = 0) ## add progress bar
-    setTxtProgressBar(pb,0)
     for (i in seq_along(dis)) {
       ## define disease indicator
       df_his[dis[i]][df_his[dis[i]] < 0] <- NA
       df_his[dis[i]][df_his[dis[i]] == 1] <- 1
       df_his[dis[i]][df_his[dis[i]] == 2] <- 0
 
-      ## update progress bar
-      setTxtProgressBar(pb,i)
     }
 
 
@@ -142,6 +137,8 @@ his_prev_calc <- function(df_his, HIS, ref_year){
     setTxtProgressBar(pb,i)
     i <- i + 1
   }
+
+  message("\n")
 
   return(result)
 }

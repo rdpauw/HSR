@@ -4,12 +4,12 @@
 \alias{dw_calc}
 \title{Perform the standard DW calculations (non-stratified)}
 \usage{
-dw_calc(xlsx, dis)
+dw_calc(xlsx, diseases)
 }
 \arguments{
 \item{xlsx}{Excel-file with sheets named as in input dis.}
 
-\item{dis}{names of the variables that should be extracted to calculate the disease DW (!should be character string).}
+\item{diseases}{names of the variables that should be extracted to calculate the disease DW (!should be character string).}
 }
 \value{
 List with resulting DW age- and gender stratified for each of the given diseases.

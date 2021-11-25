@@ -6,7 +6,7 @@
 #' @export
 getage <-
   function(x) {
-    message("Checking the structure of the input file")
+    ##message("Checking the structure of the input file")
     if (!is.character(x)) {
       stop("The input should be a character string")
     }
@@ -39,7 +39,7 @@ getage <-
 #' @export
 getage_num <-
   function(x) {
-    message("Checking the structure of the input file")
+    ##message("Checking the structure of the input file")
     if (!is.numeric(x)) {
       stop("The input should be numeric")
     }
@@ -172,12 +172,12 @@ save_dw_xlsx <- function(DW, folder = "", name = "", use_date = TRUE, template){
   xlsx_template <- template
 
   ## change the order of the output
-  id_c <- c("Age","Sex","DIA","AMI","ANG","CBDA","CBDC","CKD","COPD","LBP","NKP","OST","RHE","ALZ","EPI",
-            "ALD","AMP","OPI","CAN","COC","SCH","MDD","DYS","ANX","BIP","CIR","MIG","TTH","AST","HEA","MAC","CAT",
+  id_c <- c("Age","Sex","DIA","AMI","ANG","CBDA", "CKD1", "CKD2", "CBDC","CKD","COPD","LBP","NKP","OST","RHE","ALZ","EPI",
+            "ALD","AMP","OPI","CAN","COC","SCH","MDD","DYS","ANX","BIP","CIR","MIG","TTH", "PAR", "AST","HEA","MAC","CAT",
             "GLA","NVL","REF") %in% colnames(DW)
 
-  DW <- DW[c("Age","Sex","DIA","AMI","ANG","CBDA","CBDC","CKD","COPD","LBP","NKP","OST","RHE","ALZ","EPI",
-             "ALD","AMP","OPI","CAN","COC","SCH","MDD","DYS","ANX","BIP","CIR","MIG","TTH","AST","HEA","MAC","CAT",
+  DW <- DW[c("Age","Sex","DIA","AMI","ANG","CBDA", "CKD1", "CKD2", "CBDC","CKD","COPD","LBP","NKP","OST","RHE","ALZ","EPI",
+             "ALD","AMP","OPI","CAN","COC","SCH","MDD","DYS","ANX","BIP","CIR","MIG","TTH", "PAR", "AST","HEA","MAC","CAT",
              "GLA","NVL","REF")[id_c]]
 
   ## write sheet
