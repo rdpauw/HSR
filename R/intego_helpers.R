@@ -18,16 +18,15 @@ intego_management <-
     df_intego <- df_intego[,-which(names(df_intego) == "Year")]
     names(df_intego)[names(df_intego) %in% c("sex", "age_group")] <- c("Sex", "Age")
 
-    ## add regions
-    Region <- rep(c("Brussels", "Flanders", "Wallonia"), each = nrow(df_intego))
-    df_intego <- bind_rows(bind_rows(df_intego, df_intego),df_intego)
-    df_intego$Region <- Region
+    # ## add regions
+    # Region <- rep(c("Brussels", "Flanders", "Wallonia"), each = nrow(df_intego))
+    # df_intego <- bind_rows(bind_rows(df_intego, df_intego),df_intego)
+    # df_intego$Region <- Region
 
     ## divide by 100
-    df_intego <- dplyr::mutate(.data = df_intego, across(.cols = -c("Sex", "Age", "Region"), .fns = ~.x/100))
+    df_intego <- dplyr::mutate(.data = df_intego, across(.cols = -c("Sex", "Age"), .fns = ~.x/100))
 
     ## return result
     return(df_intego)
 
   }
-
