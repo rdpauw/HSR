@@ -72,10 +72,17 @@ summary1 <-
 
     Y_REG_RT_STD <- 1e5 * Y_REG_STD / DEN_STD
 
+    N_REG_STD <-
+      c(with(x, tapply(N_STD, Region, sum)), BELGIUM = sum(x$N_STD))
+    DEN_STD <- c(rep(2*sum(POPTOT$POP), 3), 3*2*sum(POPTOT$POP))
+
+    N_REG_RT_STD <- 1e5 * N_REG_STD / DEN_STD
+
     data.frame(
       Cases = N_REG,
       YLD = Y_REG,
       Cases.RT = N_REG_RT,
+      Cases.ASRT = N_REG_RT_STD,
       YLD.RT = Y_REG_RT,
       YLD.ASRT = Y_REG_RT_STD)
   }
