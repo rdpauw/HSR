@@ -5,12 +5,13 @@
 \alias{statbel}
 \title{STATBEL POPULATION STRUCTURE 2012-2021}
 \format{
-A data frame with 2222 rows and 4 variables:
+A data frame with 12896 rows and 5 variables:
 \describe{
-\item{SEX}{SEX - Male of Female}
-\item{AGE}{AGE of the population}
-\item{YEAR}{YEAR on which data was based}
-\item{POP}{NUMBER of inhabitants}
+\item{region}{region can be FL, BR, WA or BE}
+\item{age}{age in years}
+\item{gender}{gender/sex can be Men of Women}
+\item{year}{year}
+\item{population}{number of inhabitants in the specific strata}
 ...
 }
 }
