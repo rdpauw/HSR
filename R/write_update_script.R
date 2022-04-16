@@ -1,6 +1,7 @@
 #' write_update_script
 #'
 #' @return R file to update R package
+#' @export
 
 
 write_update_script <- function(){
