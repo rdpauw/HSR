@@ -8,7 +8,7 @@ write_update_script <- function(){
   ## check if dir exist
   if(!dir.exists("inst/dev")) {
     message("creating dir 'inst/dev'")
-    dir.create("inst/dev")
+    dir.create("inst/dev", recursive = TRUE)
   }
 
   write_update_script <- "
