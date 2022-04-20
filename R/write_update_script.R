@@ -28,10 +28,9 @@ write_update_script <- function(){
 ## load required libraries
 
 ## The package contains the following data/functions:
-## .. betaguess: guess beta parameters based on CI and mean/mode
-## .. mean_ci: return the mean and 95% CI
+## ..
 
-## .. statbel: population statbel data
+## ..
 
 
 
@@ -69,7 +68,7 @@ pkgdown::build_site() ## update website
 ##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ##                        Extra code ####
 ##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-usethis::use_package('RColorBrewer') ## include a package as dependency
+usethis::use_package('') ## include a package as dependency
 usethis::use_vignette() ## include a new vignette"
   writeLines(write_update_script, "inst/dev/00-update-package.R")
 
