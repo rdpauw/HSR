@@ -9,6 +9,7 @@
 #'
 #' @param x One of these: "js", "dta"
 #' @return The path to the specified directory
+#' @export
 dir <- function(x = c("js", "dta")) {
   x <- match.arg(x)
   switch (

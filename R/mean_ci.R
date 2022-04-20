@@ -13,6 +13,7 @@
 #' \dontrun{
 #' mean_ci(x)
 #' }
+#' @export
 mean_ci <- function(x){
   if (TRUE %in% is.na(x)) warning("There is missing data")
   mean_x <- mean(x, na.rm = TRUE)

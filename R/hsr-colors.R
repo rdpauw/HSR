@@ -8,6 +8,7 @@
 #' hsr_colors
 #'
 #' @return HSR COLORS
+#' @export
 hsr_colors <- function() {
 
   hsr_colors <- list()

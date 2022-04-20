@@ -9,6 +9,7 @@
 #'
 #' @param x A highcharter chart
 #' @return A highchater chart.
+#' @export
 drop_padding <-
   function(x) {
     x$sizingPolicy <- htmlwidgets::sizingPolicy(padding = 0, browser.fill = TRUE)
@@ -19,6 +20,7 @@ drop_padding <-
 #'
 #' @param x A highcharter chart
 #' @return A highchater chart.
+#' @export
 drop_yAxis <-
   function(x) {
     x$x$hc_opts$yAxis$title <- list(text = NULL)
@@ -29,6 +31,7 @@ drop_yAxis <-
 #'
 #' @param x A highcharter chart
 #' @return A highchater chart.
+#' @export
 drop_xAxis <-
   function(x) {
     x$x$hc_opts$xAxis$title <- list(text = NULL)
@@ -41,6 +44,7 @@ drop_xAxis <-
 #' @param filename Filename used for saving
 #' @param map Are you exporting a map? (Default: \code{FALSE})
 #' @return Saved highcharter chart in .js
+#' @export
 export_hc2 <-
   function(hc, filename, map = FALSE) {
     ## derive filename
