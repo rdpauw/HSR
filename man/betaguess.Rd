@@ -27,5 +27,4 @@ Guess the beta-distribution parameters based on CI
 \dontrun{
 betaguess(best, lower, upper, p = 0.95, method = "mode")
 }
-
 }

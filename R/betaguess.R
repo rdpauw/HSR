@@ -17,7 +17,8 @@
 #' \dontrun{
 #' betaguess(best, lower, upper, p = 0.95, method = "mode")
 #' }
-#'
+#' @export
+
 betaguess <- function(best, lower, upper, p = 0.95, method = "mode") {
   if (missing(best))
     stop("'best' is missing")
